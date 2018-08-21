@@ -13,6 +13,7 @@ public class Constant {
     public static Map<String, String> customerPlatformConstant = new LinkedHashMap<String, String>() {{
         put("qdzq", "渠道抓取");
         put("zfb", "支付宝");
+        put("xmt", "新媒体推广");
     }};
 
     public static Map<String, String> customerInputTypeConstant = new LinkedHashMap<String, String>() {{
