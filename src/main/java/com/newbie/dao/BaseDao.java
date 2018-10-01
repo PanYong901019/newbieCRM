@@ -9,13 +9,13 @@ import java.util.Map;
 public interface BaseDao {
 
     @Insert("${sql}")
-    Object executeInsertSqlQuery(@Param("sql") String sql);
+    void executeInsertSqlQuery(@Param("sql") String sql);
 
     @Delete("${sql}")
-    Object executeDeleteSqlQueryl(@Param("sql") String sql);
+    void executeDeleteSqlQueryl(@Param("sql") String sql);
 
     @Update("${sql}")
-    Object executeUpdateSqlQuery(@Param("sql") String sql);
+    void executeUpdateSqlQuery(@Param("sql") String sql);
 
     @Select("${sql}")
     List<Map> executeSelectSqlQuery(@Param("sql") String sql);

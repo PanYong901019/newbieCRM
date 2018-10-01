@@ -142,6 +142,7 @@
 
 <div class="layui-btn-group customerListOption">
     <button class="layui-btn" data-type="allot">指派</button>
+    <button class="layui-btn" data-type="exportList">导出此列表</button>
 </div>
 
 <script type="text/html" id="usernameTpl">
@@ -261,6 +262,15 @@
                 } else {
                     layer.msg("您还没选学生呢！")
                 }
+            },
+            exportList: function () {
+                var a = document.createElement('a');
+                var url = '/api/customer/exportCustomerList?nameorphone=' + $("#nameorphone").val() + '&flag=' + $("#flag").val() + '&counselorId=' + $("#counselorId").val() + '&source=' + $("#source").val() + '&inputType=' + $("#inputType").val() + '&platform=' + $("#platform").val() + '&status=' + $("#status").val();
+                if ($("#addTime").attr("data")) {
+                    url = url + '&addTime=' + $("#addTime").attr("data")
+                }
+                a.href = url;
+                a.click();
             }
         };
 

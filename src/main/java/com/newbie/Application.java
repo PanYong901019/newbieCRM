@@ -114,7 +114,7 @@ class SessionFilter implements Filter {
         Map<String, String> requestParameter = request.getParameterMap().entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v.getValue()[0]));
         String date = DateUtil.getDateString(new Date(), "【yyyy-MM-dd HH:mm:ss】");
         String[] whitelist = {"/apiError", "/webError", "/admin", "/admin/index"};
-        String[] rpcApiList = {"/api/login", "/v1/sms/sendSms", "/v1/customer/addCustomer"};
+        String[] rpcApiList = {"/api/login", "/v1/sms/sendSms", "/v1/customer/addCustomer", "/api/doCooperation"};
         String uri = request.getRequestURI().substring(request.getContextPath().length());
         if (StringUtil.isHave(whitelist, uri) || uri.startsWith("/static") || "/favicon.ico".equals(uri)) {
             filterChain.doFilter(request, response);

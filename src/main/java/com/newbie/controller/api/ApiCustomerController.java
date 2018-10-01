@@ -1,15 +1,20 @@
 package com.newbie.controller.api;
 
+import com.easyond.utils.DateUtil;
 import com.easyond.utils.ObjectUtil;
+import com.easyond.utils.PoiUtil;
 import com.easyond.utils.StringUtil;
 import com.newbie.controller.BaseController;
+import com.newbie.model.Customer;
 import com.newbie.utils.Constant;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -54,6 +59,70 @@ public class ApiCustomerController extends BaseController {
         customerList.put("msg", "");
         return ObjectUtil.mapToJsonString(customerList);
     }
+
+    @RequestMapping(value = "exportCustomerList")
+    void exportCustomerList(HttpServletResponse res) {
+        Map<String, String> search = new HashMap<String, String>() {{
+            if (!StringUtil.invalid(getParameter("nameorphone"))) {
+                put("nameorphone", getParameter("nameorphone"));
+            }
+            if (!StringUtil.invalid(getParameter("flag"))) {
+                put("flag", getParameter("flag"));
+            }
+            if (!StringUtil.invalid(getParameter("source"))) {
+                put("source", getParameter("source"));
+            }
+            if (!StringUtil.invalid(getParameter("inputType"))) {
+                put("inputType", getParameter("inputType"));
+            }
+            if (!StringUtil.invalid(getParameter("platform"))) {
+                put("platform", getParameter("platform"));
+            }
+            if (!StringUtil.invalid(getParameter("status"))) {
+                put("status", getParameter("status"));
+            }
+            if (!StringUtil.invalid(getParameter("addTime"))) {
+                put("addTime", getParameter("addTime"));
+            }
+        }};
+        Map<String, Object> customerList;
+        if (getLoginUserAuth() != 0) {
+            Integer loginUserId = getLoginUserId();
+            customerList = customerServiceImpl.getCustomerList(loginUserId, search, "1", "1000000");
+        } else {
+            customerList = customerServiceImpl.getCustomerList(StringUtil.invalid(getParameter("counselorId")) ? null : Integer.valueOf(getParameter("counselorId")), search, "1", "1000000");
+        }
+        LinkedHashMap<String, LinkedList<List>> map = new LinkedHashMap<>();
+        LinkedList<List> rows = new LinkedList<List>() {{
+            add(new ArrayList<Object>() {{
+                add("dbId");
+                add("添加时间");
+                add("姓名");
+                add("电话号");
+            }});
+        }};
+        ((List<Customer>) customerList.get("data")).forEach(customer -> {
+            List cols = new ArrayList();
+            cols.add(customer.getId());
+            cols.add(customer.getAddTimeString());
+            cols.add(customer.getName());
+            cols.add(customer.getPhone());
+            rows.add(cols);
+        });
+        map.put("car", rows);
+        List<Integer> l = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7);
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = PoiUtil.doWriterExcel(map, l, ".xlsx");
+            res.setHeader("content-type", "application/octet-stream");
+            res.setContentType("application/octet-stream");
+            res.setHeader("Content-Disposition", "attachment;filename=" + DateUtil.getDateString(Calendar.getInstance(Locale.CHINA).getTime(), "yyyy-MM-dd") + ".xlsx");
+            OutputStream os = res.getOutputStream();
+            os.write(byteArrayOutputStream.toByteArray());
+            os.flush();
+        } catch (IOException e) {
+        }
+    }
+
 
     @RequestMapping(value = "updateCustomer")
     String updateCustomer() {

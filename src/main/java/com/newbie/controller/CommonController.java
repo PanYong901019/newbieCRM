@@ -1,12 +1,15 @@
 package com.newbie.controller;
 
 import com.easyond.utils.ObjectUtil;
+import com.easyond.utils.SendEmail;
 import com.easyond.utils.StringUtil;
 import com.newbie.model.Customer;
+import com.newbie.utils.Common;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,7 +63,7 @@ public class CommonController extends BaseController {
             if (customer != null) {
                 if (StringUtil.isHave(customer.getSource().split("\\|"), source)) {
                     result.put("success", 1);
-                    result.put("msg", "您已经申请过了，请等待老师与您联系");
+                    result.put("msg", "您已经申请过了，请等待我们与您联系");
                     return ObjectUtil.mapToJsonString(result);
                 } else {
                     customer.setSource(customer.getSource() + "|" + source).setAddTime(String.valueOf(System.currentTimeMillis()).substring(0, 10));
@@ -76,7 +79,22 @@ public class CommonController extends BaseController {
         }
 
         result.put("success", 1);
-        result.put("msg", "我们已收到您的信息，请随时保持电话畅通，我们老师将尽快与您联系，感谢您的支持！");
+        result.put("msg", "我们已收到您的信息，请随时保持电话畅通，我们将尽快与您联系，感谢您的支持！");
+        return ObjectUtil.mapToJsonString(result);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/api/doCooperation")
+    String doCooperation() {
+        Map<String, Object> result = new HashMap<>();
+        String companyName = getParameter("companyName");
+        String email = getParameter("email");
+        String context = getParameter("context");
+        SendEmail.builder(envir.getProperty("mailHost"), envir.getProperty("senderUserName"), envir.getProperty("senderPassWrod"), envir.getProperty("nickName")).doSendHtmlEmail("官网合作信息", Common.doCooperationContent(companyName, email, context), new ArrayList<String>() {{
+            add("abc@abc.abc");
+        }}, null);
+        result.put("success", 1);
+        result.put("msg", "我们已收到您的信息，请随时保持电话畅通，我们将尽快与您联系，感谢您的支持！");
         return ObjectUtil.mapToJsonString(result);
     }
 }

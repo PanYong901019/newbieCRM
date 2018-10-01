@@ -40,7 +40,7 @@ public class CommonServiceImpl extends BaseService implements CommonService {
                 baseDaoImpl.executeInsertSqlQuery("INSERT INTO cainiao_sms ( phone, `code`, send_time ) VALUES ( " + phone + "," + i + "," + String.valueOf(System.currentTimeMillis()).substring(0, 10) + ")");
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return null;
     }

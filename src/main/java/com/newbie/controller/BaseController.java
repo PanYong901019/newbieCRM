@@ -9,6 +9,7 @@ import com.newbie.service.UserService;
 import com.newbie.utils.AppCache;
 import com.newbie.utils.HttpContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.util.WebUtils;
 
@@ -26,6 +27,8 @@ public class BaseController {
     protected LinkedHashMap<String, Object> rspResult = new LinkedHashMap<>();
     @Autowired
     protected AppCache appCache;
+    @Autowired
+    protected Environment envir;
     @Autowired
     protected HttpSession session;
     @Autowired
