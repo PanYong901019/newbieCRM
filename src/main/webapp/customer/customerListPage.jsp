@@ -30,7 +30,7 @@
         }
 
         .flagSelect .layui-form-select dl dd[lay-value="2"] {
-            background: #fac35e;
+            background: #1e90ff;
         }
 
         .flagSelect .layui-form-select dl dd[lay-value="3"] {
@@ -54,7 +54,7 @@
         }
 
         .userFlag[data="2"] {
-            color: #fac35e;
+            color: #1e90ff;
         }
 
         .userFlag[data="3"] {
@@ -174,8 +174,8 @@
                 {field: 'addTimeString', title: '添加时间', width: 165},
                 {field: 'name', title: '姓名', width: 100, templet: '#usernameTpl', unresize: true},
                 {field: 'phone', title: '手机号', width: 120},
-                {field: 'sourceName', title: '来源'},
-                {field: 'platformName', title: '平台', width: 80, align: 'right'},
+                {field: 'source', title: '来源'},
+                {field: 'platform', title: '平台', width: 80, align: 'right'},
                 {field: 'inputTypeName', title: '录入类型', width: 120, align: 'right'},
                 <% if (HttpContextUtil.getLoginUserAuth(request) == 0) {%>
                 {field: 'counselorName', title: '咨询师', width: 80, align: 'right'},
