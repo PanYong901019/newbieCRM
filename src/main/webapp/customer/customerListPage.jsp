@@ -228,10 +228,11 @@
                         btn: ['确定'],
                         yes: function (index) {
                             var allotTocounselorId = $("#allotTocounselorId").val();
+                            var allotPercent = $("#allotPercent").val();
                             $.ajax({
                                 url: '/api/customer/allotCustomer',
                                 type: 'POST',
-                                data: {customerIds: JSON.stringify(customerIds), counselorId: allotTocounselorId},
+                                data: {customerIds: JSON.stringify(customerIds), counselorId: allotTocounselorId, allotPercent: allotPercent},
                                 dataType: "json",
                                 success: function (result) {
                                     if (result.rspCode === 0) {
@@ -257,7 +258,22 @@
                         <% for (User user : userList) { %>
                         '<option value="<%=user.getId()%>" <%= user.getStatus() == 1 ? "" : "disabled" %>><%=user.getName()%></option>' +
                         <% }%>
-                        '</select>'
+                        '</select>' +
+                        (table.checkStatus('customerList').isAll ?
+                            '分配比率' +
+                            '<select id="allotPercent" class="layui-form-select layui-input layui-select">' +
+                            '<option value="100">100%</option>' +
+                            '<option value="90">90%</option>' +
+                            '<option value="80">80%</option>' +
+                            '<option value="70">70%</option>' +
+                            '<option value="60">60%</option>' +
+                            '<option value="50">50%</option>' +
+                            '<option value="40">40%</option>' +
+                            '<option value="30">30%</option>' +
+                            '<option value="20">20%</option>' +
+                            '<option value="10">10%</option>' +
+                            '</select>' : '')
+
                     });
                 } else {
                     layer.msg("您还没选学生呢！")

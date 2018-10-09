@@ -145,9 +145,15 @@ public class ApiCustomerController extends BaseController {
     String allotCustomer() {
         String customerIds = getParameter("customerIds");
         String counselorId = getParameter("counselorId");
+        String allotPercent = getParameter("allotPercent");
         if (!StringUtil.invalid(customerIds) && customerIds.length() >= 2) {
             List<String> customerIdList = ObjectUtil.jsonStringToArray(customerIds, String.class);
-            customerServiceImpl.allotCustomer(counselorId, customerIdList);
+            Double i = customerIdList.size() * (StringUtil.invalid(allotPercent) ? 1 : (Double.valueOf(allotPercent) / 100));
+            Collections.shuffle(customerIdList);
+            List<String> yes = customerIdList.subList(0, i.intValue());
+            List<String> no = customerIdList.subList(i.intValue(), customerIdList.size());
+            customerServiceImpl.allotCustomer(counselorId, yes);
+            customerServiceImpl.allotCustomer("-1", no);
         }
         rspCode = OK;
         rspInfo = "success";
