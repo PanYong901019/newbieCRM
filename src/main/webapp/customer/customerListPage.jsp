@@ -259,7 +259,7 @@
                         '<option value="<%=user.getId()%>" <%= user.getStatus() == 1 ? "" : "disabled" %>><%=user.getName()%></option>' +
                         <% }%>
                         '</select>' +
-                        (table.checkStatus('customerList').isAll ?
+                        (table.checkStatus('customerList').data.length > 9 ?
                             '分配比率' +
                             '<select id="allotPercent" class="layui-form-select layui-input layui-select">' +
                             '<option value="100">100%</option>' +

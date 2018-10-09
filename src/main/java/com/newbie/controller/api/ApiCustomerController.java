@@ -149,11 +149,15 @@ public class ApiCustomerController extends BaseController {
         if (!StringUtil.invalid(customerIds) && customerIds.length() >= 2) {
             List<String> customerIdList = ObjectUtil.jsonStringToArray(customerIds, String.class);
             Double i = customerIdList.size() * (StringUtil.invalid(allotPercent) ? 1 : (Double.valueOf(allotPercent) / 100));
-            Collections.shuffle(customerIdList);
-            List<String> yes = customerIdList.subList(0, i.intValue());
-            List<String> no = customerIdList.subList(i.intValue(), customerIdList.size());
-            customerServiceImpl.allotCustomer(counselorId, yes);
-            customerServiceImpl.allotCustomer("-1", no);
+            if (i.intValue() != customerIdList.size()) {
+                Collections.shuffle(customerIdList);
+                List<String> yes = customerIdList.subList(0, i.intValue());
+                List<String> no = customerIdList.subList(i.intValue(), customerIdList.size());
+                customerServiceImpl.allotCustomer(counselorId, yes);
+                customerServiceImpl.allotCustomer("-1", no);
+            } else {
+                customerServiceImpl.allotCustomer(counselorId, customerIdList);
+            }
         }
         rspCode = OK;
         rspInfo = "success";
