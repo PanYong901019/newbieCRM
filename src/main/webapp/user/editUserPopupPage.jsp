@@ -57,7 +57,7 @@
 <script>
     layui.use(['form', 'layedit', 'laydate'], function () {
         var form = layui.form, layer = layui.layer;
-        form.val('editUserForm', JSON.parse('<%=user != null ?user.toString():""%>'));
+        form.val('editUserForm', JSON.parse('<%=user != null ?user.toString():"{}"%>'));
         form.on('submit(editUserSubmitBtn)', function (formData) {
             var editUserForm = $(".editUserForm");
             $.ajax({
