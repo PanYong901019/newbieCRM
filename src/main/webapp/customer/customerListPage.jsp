@@ -146,7 +146,7 @@
 </div>
 
 <script type="text/html" id="usernameTpl">
-    <i class="layui-icon layui-icon-star userFlag" style='font-size: 18px; ' data='{{d.flag}}'></i>
+    <i class="layui-icon layui-icon-star-fill userFlag" style='font-size: 18px; ' data='{{d.flag}}'></i>
     <a href="javascript:;">{{d.name}}</a>
 </script>
 
