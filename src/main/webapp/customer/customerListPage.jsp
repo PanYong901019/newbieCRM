@@ -30,7 +30,7 @@
         }
 
         .flagSelect .layui-form-select dl dd[lay-value="2"] {
-            background: #fac35e;
+            background: #1E90FF;
         }
 
         .flagSelect .layui-form-select dl dd[lay-value="3"] {
@@ -54,7 +54,7 @@
         }
 
         .userFlag[data="2"] {
-            color: #fac35e;
+            color: #1E90FF;
         }
 
         .userFlag[data="3"] {
