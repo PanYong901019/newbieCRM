@@ -32,6 +32,7 @@ public class Constant {
         put("websafe", "网络安全");
         put("python", "Python");
         put("html", "H5");
+        put("2d原画", "2d原画");
     }};
 
     public static Map<String, String> customerFlagConstant = new LinkedHashMap<String, String>() {{
