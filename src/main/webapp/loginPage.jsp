@@ -18,7 +18,7 @@
 
     <div class="layadmin-user-login-main">
         <div class="layadmin-user-login-box layadmin-user-login-header">
-            <h2>TTDY CRM</h2>
+            <h2>TtdyGame CRM</h2>
             <p>泰通大有第三方平台支撑式CRM系统</p>
         </div>
 
