@@ -33,6 +33,8 @@ public class Constant {
         put("python", "Python");
         put("html", "H5");
         put("2d原画", "2d原画");
+        put("yz", "一折");
+        put("9.9", "9.9");
     }};
 
     public static Map<String, String> customerFlagConstant = new LinkedHashMap<String, String>() {{
