@@ -33,6 +33,7 @@ public class Constant {
         put("python", "Python");
         put("html", "H5");
         put("2d原画", "2d原画");
+        put("gzd", "格子达");
         put("yz", "一折");
         put("9.9", "9.9");
     }};
