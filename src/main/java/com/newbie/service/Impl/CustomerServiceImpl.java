@@ -1,6 +1,7 @@
 package com.newbie.service.Impl;
 
 
+import com.easyond.utils.DateUtil;
 import com.easyond.utils.StringUtil;
 import com.newbie.model.Customer;
 import com.newbie.service.BaseService;
@@ -9,6 +10,7 @@ import com.newbie.utils.AppException;
 import com.newbie.utils.Common;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,12 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
         result.put("count", rowCount);
         result.put("data", customerList);
         return result;
+    }
+
+    @Override
+    public List<Customer> getCustomerListByDay(String day) {
+        String end = DateUtil.getDateString(DateUtil.getDateAfter(DateUtil.getDate(day, "yyyy-MM-dd"), 1), "yyyy-MM-dd");
+        return customerDaoImpl.getCustomerListByDate(Common.dateToStamp(day).substring(0, 10), Common.dateToStamp(end).substring(0, 10));
     }
 
     @Override

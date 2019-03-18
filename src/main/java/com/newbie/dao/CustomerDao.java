@@ -45,5 +45,7 @@ public interface CustomerDao {
     @Insert("INSERT INTO cainiao_customer ( `name`, phone, source, input_type, platform, `is_ dispose`, flag, add_time, `status` ) VALUES (#{name},#{phone},#{source},#{inputType},#{platform},#{isDispose},#{flag},#{addTime},#{status})")
     Integer addCustomer(Customer customer);
 
-
+    @Select("SELECT c.*, u.`name` AS counselorName FROM cainiao_customer c LEFT JOIN cainiao_admin_user u ON u.id = c.counselor WHERE c.add_time BETWEEN #{startAddTime} AND #{endAddTime} ORDER BY c.add_time DESC")
+    @ResultMap("customerMap")
+    List<Customer> getCustomerListByDate(@Param(value = "startAddTime") String startAddTime, @Param(value = "endAddTime") String endAddTime);
 }

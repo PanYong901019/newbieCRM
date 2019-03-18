@@ -8,9 +8,13 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.newbie.model.YicheCity;
+import com.newbie.model.YicheProduct;
 import com.newbie.service.BaseService;
 import com.newbie.service.CommonService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service(value = "commonService")
 public class CommonServiceImpl extends BaseService implements CommonService {
@@ -49,4 +53,15 @@ public class CommonServiceImpl extends BaseService implements CommonService {
     public Boolean verifyCode(String phone, String code) {
         return (Long) baseDaoImpl.executeSelectSqlQuery("SELECT count( * ) as rowCount FROM cainiao_sms WHERE phone = " + phone + "  AND `code` = " + code).get(0).get("rowCount") > 0;
     }
+
+    @Override
+    public void insertYicheCity(List<YicheCity> yicheCityList) {
+        yicheCityList.forEach(yicheCity -> baseDaoImpl.executeInsertSqlQuery("INSERT INTO yiche_city ( id, parent_id, type, `name` ) VALUES ( " + yicheCity.getId() + "," + yicheCity.getParentId() + "," + yicheCity.getType() + ", '" + yicheCity.getName() + "' )"));
+    }
+
+    @Override
+    public void insertYicheProduct(List<YicheProduct> yicheProductList) {
+        yicheProductList.forEach(yicheProduct -> baseDaoImpl.executeInsertSqlQuery("INSERT INTO yiche_product ( id, parent_id, type, `name` ) VALUES ( " + yicheProduct.getId() + "," + yicheProduct.getParentId() + "," + yicheProduct.getType() + ", '" + yicheProduct.getName() + "' )"));
+    }
+
 }

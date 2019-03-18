@@ -10,6 +10,8 @@ public interface CustomerService {
 
     Map<String, Object> getCustomerList(Integer counselorId, Map<String, String> search, String pageNo, String limit);
 
+    List<Customer> getCustomerListByDay(String date);
+
     Customer getCustomerById(String customerId);
 
     Customer getCustomerByPhone(String phone);

@@ -1,9 +1,6 @@
 package com.newbie.service;
 
-import com.newbie.dao.BaseDao;
-import com.newbie.dao.CustomerDao;
-import com.newbie.dao.CustomerRecordDao;
-import com.newbie.dao.UserDao;
+import com.newbie.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
@@ -19,4 +16,6 @@ public class BaseService {
     protected CustomerDao customerDaoImpl;
     @Autowired
     protected CustomerRecordDao customerRecordDaoImpl;
+    @Autowired
+    protected YicheDao yicheDaoImpl;
 }

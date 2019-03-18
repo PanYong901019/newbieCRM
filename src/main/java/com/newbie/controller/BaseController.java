@@ -2,10 +2,7 @@ package com.newbie.controller;
 
 import com.easyond.utils.ObjectUtil;
 import com.newbie.model.User;
-import com.newbie.service.CommonService;
-import com.newbie.service.CustomerRecordService;
-import com.newbie.service.CustomerService;
-import com.newbie.service.UserService;
+import com.newbie.service.*;
 import com.newbie.utils.AppCache;
 import com.newbie.utils.HttpContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +38,8 @@ public class BaseController {
     protected CustomerRecordService customerRecordServiceImpl;
     @Autowired
     protected CommonService commonServiceImpl;
+    @Autowired
+    protected YicheService yicheServiceImpl;
 
     protected String getParameter(String parameterKey) {
         return WebUtils.findParameterValue(request, parameterKey);
@@ -62,21 +61,25 @@ public class BaseController {
         return getLoginUser() != null;
     }
 
-    protected Map<String, Object> getResult() {
+    protected Map<String, Object> getResultObject() {
         Map<String, Object> result = new LinkedHashMap<String, Object>() {{
             put("rspCode", rspCode);
             put("rspInfo", rspInfo);
-            put("rspResult", rspResult);
+            if (rspResult.size() != 0) {
+                put("rspResult", rspResult);
+            }
         }};
+        rspResult = new LinkedHashMap<>();
         return result;
     }
 
     protected String getResultJsonString() {
-        Map<String, Object> result = new LinkedHashMap<String, Object>() {{
-            put("rspCode", rspCode);
-            put("rspInfo", rspInfo);
-            put("rspResult", rspResult);
-        }};
-        return ObjectUtil.mapToJsonString(result);
+        //注释的代码是用来支持jsonp
+//        String callback = getParameter("callback");
+//        if (!StringUtil.invalid(callback) && !StringUtil.invalid(getParameter("_"))) {
+//            return callback + "(" + ObjectUtil.mapToJsonString(getResultObject()) + ");";
+//        } else {
+        return ObjectUtil.mapToJsonString(getResultObject());
+//        }
     }
 }
